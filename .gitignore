@@ -1,0 +1,12 @@
+# Binaries
+
+bin/*
+bin-int/*
+!premake/bin/
+
+# Visual Studio files/directories
+
+.vs/
+*.sln
+*.vcxproj*
+
