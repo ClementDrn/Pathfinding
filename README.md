@@ -2,7 +2,7 @@
 
 ## Description
 
-This project includes the **Pathfinding** library and an application named **App** to test it.
+This project includes a C++ **Pathfinding** library and an application named **App** to test it.
 
 
 ## Installation
