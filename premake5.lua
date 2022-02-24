@@ -110,7 +110,6 @@ project "App"
 		"freetype.lib",
 		"winmm.lib",
 		"gdi32.lib",
-		"ws2_32.lib",
 		"SFML",
 		"Pathfinding"
 	}
