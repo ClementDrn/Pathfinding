@@ -34,7 +34,7 @@ For now, the only supported algorithm is `A*`.
 
 ### App
 
-The test application can illustrate the use of the **Pathfinding** library. It is a desktop application showing a grid with one starting point, one goal, obstacles and a path between the two points.
+The test application can illustrate the use of the **Pathfinding** library. It is a SFML desktop application showing a grid with one starting point, one goal, obstacles and a path between the two points.
 
 You can interact with the grid with keyboard and mouse inputs.
 
