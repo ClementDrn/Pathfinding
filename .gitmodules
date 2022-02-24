@@ -1,3 +1,6 @@
-[submodule "Pathfinding/vendor/SFML"]
-	path = Pathfinding/vendor/SFML
+[submodule "App/vendor/SFML"]
+	path = App/vendor/SFML
 	url = https://github.com/ClementDrn/SFML
+[submodule "Pathfinding/vendor/SEL"]
+	path = Pathfinding/vendor/SEL
+	url = https://github.com/ClementDrn/SEL

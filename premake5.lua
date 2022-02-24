@@ -11,7 +11,7 @@ workspace "Pathfinding"
 		"x64"
 	}
 
-	startproject "Pathfinding"
+	startproject "App"
 
 	filter "platforms:x86"
 		architecture "x86"
@@ -24,36 +24,73 @@ workspace "Pathfinding"
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 includedir = {}
-includedir["SFML"] = "Pathfinding/vendor/SFML/include"
+includedir["SFML"] = "App/vendor/SFML/include"
+includedir["SEL"] = "Pathfinding/vendor/SEL/include"
+includedir["Pathfinding"] = "Pathfinding/include"
 
 
 --- Dependencies ---------------------------
 group "Dependencies"
-	include "Pathfinding/vendor/SFML"
+	include "App/vendor/SFML"
 group ""
 
 
 --- Pathfinding --------------------------------
 project "Pathfinding"
-
+	
+	kind "StaticLib"
 	location "Pathfinding"
-	kind "ConsoleApp"
 	language "C++"
 	cppdialect "C++20"
 	staticruntime "on"
 
 	targetdir("bin/" .. outputdir .. "/%{prj.name}")
-	objdir("bin-int/" .. outputdir .. "/%{prj.name}")
+	objdir("obj/" .. outputdir .. "/%{prj.name}")
 
 	files {
 		"%{prj.name}/src/**.hpp",
 		"%{prj.name}/src/**.cpp",
-		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.c"
+		"%{prj.name}/include/**.hpp"
 	}
 
 	includedirs {
-		"%{includedir.SFML}"
+		"%{includedir.SEL}",
+		"Pathfinding/include/",
+		"Pathfinding/src/"
+	}
+
+	filter "system:windows"
+		systemversion "latest"
+
+	filter "configurations:Debug"
+		runtime "Debug"
+		symbols "on"
+
+	filter "configurations:Release"
+		runtime "Release"
+		optimize "on"
+
+
+--- App --------------------------------
+project "App"
+
+	location "App"
+	language "C++"
+	cppdialect "C++20"
+	staticruntime "on"
+
+	targetdir("bin/" .. outputdir .. "/%{prj.name}")
+	objdir("obj/" .. outputdir .. "/%{prj.name}")
+
+	files {
+		"%{prj.name}/src/**.hpp",
+		"%{prj.name}/src/**.cpp"
+	}
+
+	includedirs {
+		"%{includedir.Pathfinding}",
+		"%{includedir.SFML}",
+		"%{includedir.SEL}",
 	}
 
 	defines {
@@ -61,6 +98,7 @@ project "Pathfinding"
 	}
 
 	filter "system:windows"
+		entrypoint "mainCRTStartup"
 		systemversion "latest"
 		libdirs {
 			"%{prj.name}/vendor/SFML/extlibs/libs-msvc-universal/%{cfg.platform}/"
@@ -73,13 +111,16 @@ project "Pathfinding"
 		"winmm.lib",
 		"gdi32.lib",
 		"ws2_32.lib",
-		"SFML"
+		"SFML",
+		"Pathfinding"
 	}
 
 	filter "configurations:Debug"
+		kind "ConsoleApp"
 		runtime "Debug"
 		symbols "on"
 
 	filter "configurations:Release"
+		kind "WindowedApp"
 		runtime "Release"
 		optimize "on"
