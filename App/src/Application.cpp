@@ -151,7 +151,9 @@ namespace App {
                         m_goal.x = x;
                         m_goal.y = y;
                     }
+
                     m_map[x][y] = true;
+                    m_rendererTiles[x][y] = nullptr;
                 }
 
                 m_path = Pathfinding::AStar::findPathInGrid(m_map, { m_start.x, m_start.y }, { m_goal.x, m_goal.y });
