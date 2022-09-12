@@ -47,7 +47,7 @@ namespace App {
 		// Pathfinding
 		sf::Vector2u m_start = { 8, 7 };
 		sf::Vector2u m_goal = { 20, 10 };
-		std::array<std::array<bool, MAP_SIZE_Y>, MAP_SIZE_X> m_map;
+		std::array<bool, MAP_SIZE_Y * MAP_SIZE_X> m_map;
 		std::vector<sel::Vec2u> m_path;
 
 		// Renderer

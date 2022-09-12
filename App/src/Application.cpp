@@ -15,13 +15,8 @@ namespace App {
 	{
         // --- Setup map ------------------------
 
-        // The map is empty (false everywhere).
-        bool column[MAP_SIZE_Y];
-        for (int i = 0; i < MAP_SIZE_Y; i++)
-            column[i] = true;
-
-        for (int i = 0; i < MAP_SIZE_X; i++)
-            memcpy(m_map[i].data(), column, sizeof(column));
+        // The map is empty (true everywhere).
+		m_map.fill(true);
 
         // --- Setup grid for rendering ---------
 
@@ -130,12 +125,12 @@ namespace App {
                             m_rendererTiles[x][y] = sel::createRef<sf::RectangleShape>(sf::Vector2f(CELL_SIZE, CELL_SIZE));
                             m_rendererTiles[x][y]->setFillColor(sf::Color(220, 30, 60));
                             m_rendererTiles[x][y]->setPosition({ (float)(x * CELL_SIZE), (float)(y * CELL_SIZE) });
-                            m_map[x][y] = false;
+                            m_map[y * MAP_SIZE_X + x] = false;
                         }
                         else if (m_isMouseRightPressed)
                         {
                             m_rendererTiles[x][y] = nullptr;
-                            m_map[x][y] = true;
+                            m_map[y * MAP_SIZE_X + x] = true;
                         }
                     }
                 }
@@ -152,11 +147,11 @@ namespace App {
                         m_goal.y = y;
                     }
 
-                    m_map[x][y] = true;
+                    m_map[y * MAP_SIZE_X + x] = true;
                     m_rendererTiles[x][y] = nullptr;
                 }
 
-                m_path = Pathfinding::AStar::findPathInGrid(m_map, { m_start.x, m_start.y }, { m_goal.x, m_goal.y });
+                m_path = Pathfinding::AStar::findPathInGrid(m_map.data(), { MAP_SIZE_X, MAP_SIZE_Y }, { m_start.x, m_start.y }, { m_goal.x, m_goal.y });
 
                 m_needsUpdate = false;
             }
